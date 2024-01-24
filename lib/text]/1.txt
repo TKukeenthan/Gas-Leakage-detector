@@ -1,0 +1,101 @@
+from leaky.dart
+....
+void initState() {
+    super.initState();
+    databaseReference.child('gasValue').onValue.listen((event) {
+      if (event.snapshot.value != null) {
+        setState(() {
+          gasValue = (event.snapshot.value as double).toDouble();
+          if (gasValue > 0) {
+            if (!isLeakageStarted) {
+              isLeakageStarted = true;
+              leakageStartTime = DateTime.now();
+              isTimerStarted = true;
+              APIs.sendPushNotificationGasLeakage(ChatUser as ChatUser);
+            }
+          } else {
+            isLeakageStarted = false;
+            isTimerStarted = false;
+          }
+        });
+      }
+    });
+  }
+...
+from main.dart
+....
+_initializeFirebase() async {
+  var result = await FlutterNotificationChannel.registerNotificationChannel(
+      description: 'For Showing Message Notification',
+      id: 'chats',
+      importance: NotificationImportance.IMPORTANCE_HIGH,
+      name: 'Chats');
+  log('\nNotification Channel Result: $result');
+}
+
+_initializeFirebase_gas() async {
+  var result1 = await FlutterNotificationChannel.registerNotificationChannel(
+      description: 'For Showing Gas Leak stutas  Notification',
+      id: 'gasLeakage',
+      importance: NotificationImportance.IMPORTANCE_HIGH,
+      name: 'gasLeakage');
+  log('\nNotification Channel Result: $result1');
+}
+...
+from APIs.dart
+... static Future<void> sendPushNotification(
+      ChatUser chatUser, String msg) async {
+    try {
+      final body = {
+        "to": chatUser.pushToken,
+        "notification": {
+          "title": me.name, //our name should be send
+          "body": msg,
+          "android_channel_id": "chats"
+        },
+        // "data": {
+        //   "some_data": "User ID: ${me.id}",
+        // },
+      };
+
+      var res = await post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+            HttpHeaders.authorizationHeader:
+                'key=AAAA95l4Ijk:APA91bEDdo-GtVdnAbmlE--GtTrVPGFp_B7rwhAjliI__4kSn849LLihrDQjBF5X0MeEcro6ROO8t_eI2Nx6fg3HPP8IeHEjKraF_JEKDZ2kzp06QlNITZLrTLn1_BZ1PIGRqYo-QMJR'
+          },
+          body: jsonEncode(body));
+      log('Response status: ${res.statusCode}');
+      log('Response body: ${res.body}');
+    } catch (e) {
+      log('\nsendPushNotificationE: $e');
+    }
+  }
+
+  static Future<void> sendPushNotificationGasLeakage(ChatUser chatUser) async {
+    try {
+      final body = {
+        "to": chatUser.pushToken,
+        'notification': {
+          'title': 'Gas Leakage Detected!',
+          'body': 'There may be a gas leak. Take action immediately.',
+        },
+        // "data": {
+        //   "some_data": "User ID: ${me.id}",
+        // },
+      };
+
+      var res = await post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+            HttpHeaders.authorizationHeader:
+                'key=AAAA95l4Ijk:APA91bEDdo-GtVdnAbmlE--GtTrVPGFp_B7rwhAjliI__4kSn849LLihrDQjBF5X0MeEcro6ROO8t_eI2Nx6fg3HPP8IeHEjKraF_JEKDZ2kzp06QlNITZLrTLn1_BZ1PIGRqYo-QMJR'
+          },
+          body: jsonEncode(body));
+      log('Response status: ${res.statusCode}');
+      log('Response body: ${res.body}');
+    } catch (e) {
+      log('\nsendPushNotificationE: $e');
+    }
+  }
+...

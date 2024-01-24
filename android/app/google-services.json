@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1063431709241",
+    "firebase_url": "https://gas-leak-alerting-system-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "gas-leak-alerting-system",
+    "storage_bucket": "gas-leak-alerting-system.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1063431709241:android:b0b6fc4aef5e96ce1e23e8",
+        "android_client_info": {
+          "package_name": "com.dreamtalkies.gldapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1063431709241-cmtkb5lccgo3b0ealruigu6qtcj382ic.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dreamtalkies.gldapplication",
+            "certificate_hash": "b91c00227079abb322a12245f7eeb7a49b2a204b"
+          }
+        },
+        {
+          "client_id": "1063431709241-h434vblp83copellt71nv91f2fb8qsmg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlr2jdg5sqEZ3wNx6eQRvTc62Av1H_A9s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1063431709241-cd80fn1kno59vl9uuhgcui9pprg6vlpi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
